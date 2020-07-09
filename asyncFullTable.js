@@ -1,7 +1,12 @@
 const {Client} = require('pg')
 const express = require ("express")
 const app = express();
+app.use(express.json())
 
+// function clickButton(){
+//   var genre = document.get.getElementById("genre").value
+//   return genre
+// }
 
 
 const client = new Client ({
@@ -13,9 +18,11 @@ const client = new Client ({
 
 })
 
+app.get("/", (req,res) => res.sendFile(`${__dirname}/index.html`))
 app.get("/movie", async (req,res) => {
   const result = await showMovie()
-  res.send(result)
+  res.setHeader("content-type", "application/json")
+  res.send(JSON.stringify(result))
 //  res.send("ola")
 })
 app.listen(8080, () => console.log("web service on port 8080"))
@@ -68,17 +75,5 @@ async function showMovie(){
   var newArray = await execute()
   var finalResult =  newArray[i]
   console.log(finalResult)
-  return finalResult.title
+  return finalResult
 }
-
-
-
-
-
-// async function clickButton(){
-//     try{
-//        const final = await execute()
-//        console.log(final)
-//        return document.getElementById("result").innerHTML = final
-//     }catch (err) {return 'error'}
-// }

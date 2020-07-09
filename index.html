@@ -5,23 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>Minimum Bootstrap HTML Skeleton</title>
+    <title>Secret Movie Picker</title>
 <!--  -->
 
 
 </head>
 
 <body>
-    <h1> Secret Movie Picker</h1>
 
+    <h1> Secret Movie Picker</h1>
     <input type="text" name="" id="genre" class="form-control" value="" required="required" pattern="" title="">
     <button type="button" onclick= "clickButton()" class="btn btn-secondary">[button]</button>
-    <p id = "result"> </p>
+
+    <h3 id = 'movie'> </h3>
+
+    <script>
+    showMovie()
+    async function showMovie(){
+      try{
+        const movie=document.getElementById('movie')
+        const result = await fetch("http://localhost:8080/movie", {method:"GET"})
+        const movieChoice = await result.json()
+        document.getElementById('movie').innerHTML = movieChoice.title
+      }
+      catch{
+        console.log("error reading the tools")
+      }
+    }
+    </script>
 
 
 
 
 
-  <script src="asyncFullTable.js"></script>
+
+
+
 </body>
 </html>
